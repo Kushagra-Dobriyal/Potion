@@ -24,6 +24,8 @@ import { use } from "react"
                <div className="w-full flex items-center justify-center"> <Spinner size="lg" ></Spinner></div>
             )}
             {isAuthenticated && !isLoading &&  (
+                //why asChild used 👉 Instead of rendering a <button>, it replaces the button with the child you pass (<Link>).
+                //asChild = “don’t render a <button>, use my child component instead, but keep all the Button styles/props”.
                  <Button asChild>
                 <Link href="/documents">
                 Enter Potion

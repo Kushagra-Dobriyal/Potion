@@ -47,6 +47,7 @@ export const Navbar=()=>{
                     Enter Potion
                     </Link>
                     </Button>
+                    {/*user button for logout purpose logo*/ }
                     <UserButton afterSwitchSessionUrl="/" />
                     </>
                   
