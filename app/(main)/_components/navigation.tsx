@@ -5,12 +5,16 @@ import { ChevronLeft, MenuIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ComponentRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import {UserItem} from "./user-item"
+
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export const Navigation = () => {
 
     const pathname = usePathname();// to auto matically close the side bar when the user click on a path/icon..  formobile
     const isMobile = useMediaQuery("(max-width: 768px)")// the isMobile const will have a true vlaue fi the size of the viewport is less then 768px and vica-versa...
-
+    const documents=useQuery(api.documnets.get);
 
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ComponentRef<"aside">>(null);
@@ -111,7 +115,6 @@ export const Navigation = () => {
 
 
 
-
     return (
         <>
             <aside
@@ -133,10 +136,16 @@ export const Navigation = () => {
 
                 </div>
                 <div>
-                    <p>Action Items</p>
+                    <UserItem/>
                 </div>
                 <div className="mt-4">
-                    <p>Documents</p>
+                    {documents?.map((document)=>{
+                        return(
+                        <p key={document._id}>
+                            {document.title}
+                        </p>
+                        )
+                    })}
                 </div>
                 <div
                     onMouseDown={handleMouseDown}
