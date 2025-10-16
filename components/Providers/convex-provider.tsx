@@ -13,11 +13,13 @@ export const ConvexClientProvider=({children}:{children:ReactNode})=>{
             <ClerkProvider
                 publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
             >
+
                 {/*ConvexProviderWithClerk connects Convex and Clerk together */}
               <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
                 {children}
               </ConvexProviderWithClerk> 
-              
+
+            
             </ClerkProvider>
     )
 }

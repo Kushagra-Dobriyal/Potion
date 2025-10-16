@@ -8,43 +8,42 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { use } from "react"
 
- export const Heading =()=>{
+export const Heading = () => {
 
-    const   {isAuthenticated,isLoading}=useConvexAuth()
+    const { isAuthenticated, isLoading } = useConvexAuth()
     return (
         <div className="max-w-3xl space-y-4">
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-                Your Ideas, Documents, & Plans. Welcome to 
+                Your Ideas, Documents, & Plans. Welcome to
                 <span className="underline"> Potion</span>
             </h1>
-            <h3 className="text-base sm:text-xl md:text-2xl  font-medium"> 
+            <h3 className="text-base sm:text-xl md:text-2xl  font-medium">
                 Potion is the connected  workspace that brings your ideas, documents, and plans together.
             </h3>
             {isLoading && (
-               <div className="w-full flex items-center justify-center"> <Spinner size="lg" ></Spinner></div>
+                <div className="w-full flex items-center justify-center">
+                    <Spinner size="lg"/>
+                </div>
             )}
-            {isAuthenticated && !isLoading &&  (
-                //why asChild used 👉 Instead of rendering a <button>, it replaces the button with the child you pass (<Link>).
-                //asChild = “don’t render a <button>, use my child component instead, but keep all the Button styles/props”.
-                 <Button asChild>
-                <Link href="/documents">
-                Enter Potion
-                <ArrowRight className="h-4 w-4 ml-2" ></ArrowRight>
-                </Link>
-            </Button> 
+            {isAuthenticated && !isLoading && (
+                <Button asChild>
+                    <Link href="/documents">
+                        Enter Potion
+                        <ArrowRight className="h-4 w-4 ml-2" ></ArrowRight>
+                    </Link>
+                </Button>
             )}
 
             {!isAuthenticated && !isLoading && (
                 <SignInButton mode="modal">
                     <Button>
                         Get Potion free
-                         <ArrowRight className="h-4 w-4 ml-2" ></ArrowRight>
-                         
+                        <ArrowRight className="h-4 w-4 ml-2" ></ArrowRight>
+
                     </Button>
                 </SignInButton>
             )}
-           
+
         </div>
     )
 }
-
