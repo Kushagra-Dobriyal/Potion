@@ -1,20 +1,25 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronLeft, MenuIcon } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ComponentRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import {UserItem} from "./user-item"
 
-import { useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { Item } from "./item";
+import { toast } from "sonner";
+import DocumentList from "./documents-list";
+
 
 export const Navigation = () => {
 
     const pathname = usePathname();// to auto matically close the side bar when the user click on a path/icon..  formobile
     const isMobile = useMediaQuery("(max-width: 768px)")// the isMobile const will have a true vlaue fi the size of the viewport is less then 768px and vica-versa...
-    const documents=useQuery(api.documnets.get);
+  
+    const create=useMutation(api.documnets.create);
 
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ComponentRef<"aside">>(null);
@@ -113,6 +118,16 @@ export const Navigation = () => {
         }
     }
 
+    const handleCreate=()=>{
+        const promise=create({title:"Untitled"});  
+
+        toast.promise(promise,{
+            loading:"Creating a new Note ...",
+            success:"New Note Created!",
+            error:"Error Creating a new Note."
+        })
+    }
+
 
 
     return (
@@ -137,21 +152,19 @@ export const Navigation = () => {
                 </div>
                 <div>
                     <UserItem/>
+                    <Item label="Search" icon={Search} isSearch onClick={()=>{}}/>
+                     <Item label="Settings" icon={Settings}  onClick={()=>{}}/>
+                    
+                    <Item onClick={handleCreate} label="New Page" icon={PlusCircle}/>
                 </div>
                 <div className="mt-4">
-                    {documents?.map((document)=>{
-                        return(
-                        <p key={document._id}>
-                            {document.title}
-                        </p>
-                        )
-                    })}
+                   <DocumentList />
                 </div>
                 <div
                     onMouseDown={handleMouseDown}
                     onClick={resetWidth}
                     className="opacity-0 group-hover:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
-                    // thsi means upon hovering on the sidebar opacity will change
+                    // thsi mean s upon hovering on the sidebar opacity will change
                 />
             </aside>
 
