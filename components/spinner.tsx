@@ -3,6 +3,7 @@ import {Loader} from "lucide-react"
 import {cva, type VariantProps}from "class-variance-authority";
 
 import {cn} from "@/lib/utils"
+{/*cn(...) ensures that:If you pass extra classes (later), they merge correctly. mans when our css is conditional then it will be used mostly */}
 
 const spinnerVariants=cva(
     "text-muted-foreground animate-spin",{
@@ -21,9 +22,7 @@ const spinnerVariants=cva(
     }
 )
 
-interface SpinnerProps extends VariantProps<typeof spinnerVariants>{
-    
-}
+interface SpinnerProps extends VariantProps<typeof spinnerVariants>{}
 
 export const Spinner=({size}:SpinnerProps)=>{
     return (
